@@ -1,0 +1,6 @@
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /var/log/apache2/*.log
+output.logstash:
+  hosts: ["172.17.0.2:5043"]
