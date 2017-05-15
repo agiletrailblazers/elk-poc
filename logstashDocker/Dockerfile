@@ -20,3 +20,9 @@ RUN wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add 
 
 # place our logstash pipeline configuration
 ADD logstash.conf /etc/logstash/conf.d
+
+# Make port 5043 (beats listening port) available outside this container
+EXPOSE 5043
+
+# Launch Logstash
+ENTRYPOINT ["/usr/share/logstash/bin/logstash", "--path.settings", "/etc/logstash"]
