@@ -31,6 +31,9 @@ RUN apt-get update -y && \
 # Make port 80 available outside this container
 EXPOSE 80
 
-# Launch Apache in the foreground
-ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+# copy the startup script
+COPY ./startup.sh /usr/local/bin/startup.sh
+RUN chmod +x /usr/local/bin/startup.sh
 
+# execute the startup script
+ENTRYPOINT ["/usr/local/bin/startup.sh"]
