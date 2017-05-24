@@ -1,0 +1,21 @@
+version: "3"
+services:
+  elk-poc-apache-service:
+    image: elk-poc-filebeat-apache:latest
+    ports:
+      - "127.0.0.1:80:80"
+    networks:
+      - stack
+    depends_on:
+      - elk-poc-logstash-service
+
+  elk-poc-logstash-service:
+    image: elk-poc-logstash:latest
+    environment:
+      - xpack.monitoring.enabled=false
+    expose:
+      - "5043"
+    networks:
+      - stack
+networks:
+  stack:
