@@ -1,8 +1,8 @@
 # Overview
 This repository contains a proof-of-concept of the ELK Stack.  
-- Elasticsearch
-- Logstash
-- Kibana
+- **E**lasticsearch
+- **L**ogstash
+- **K**ibana
 
 # Instructions
 1. Download and [Install Docker](https://docs.docker.com/engine/installation/).
