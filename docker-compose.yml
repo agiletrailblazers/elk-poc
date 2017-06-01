@@ -38,6 +38,22 @@ services:
     depends_on:
       - elk-poc-logstash-service
 
+  elk-poc-kibana-service:
+    image: elk-poc-kibana:latest
+    ports:
+      - "127.0.0.1:5601:5601"
+    networks:
+      - stack
+    depends_on:
+      - elk-poc-elasticsearch-service
+
+volumes:
+  esdata:
+    driver: local
+
+networks:
+  stack:
+
 volumes:
   esdata:
     driver: local
