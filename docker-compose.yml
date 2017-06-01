@@ -1,5 +1,34 @@
-version: "3"
+version: "2"
 services:
+  elk-poc-elasticsearch-service:
+    image: elk-poc-elasticsearch:latest
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1g
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - stack
+
+  elk-poc-logstash-service:
+    image: elk-poc-logstash:latest
+    environment:
+      - xpack.monitoring.enabled=false
+    depends_on:
+      - elk-poc-elasticsearch-service
+    networks:
+      - stack
+
   elk-poc-apache-service:
     image: elk-poc-filebeat-apache:latest
     ports:
@@ -9,13 +38,9 @@ services:
     depends_on:
       - elk-poc-logstash-service
 
-  elk-poc-logstash-service:
-    image: elk-poc-logstash:latest
-    environment:
-      - xpack.monitoring.enabled=false
-    expose:
-      - "5043"
-    networks:
-      - stack
+volumes:
+  esdata:
+    driver: local
+
 networks:
   stack:
