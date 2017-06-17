@@ -28,6 +28,9 @@ RUN apt-get update -y && \
     apt-get update -y && \
     apt-get clean
 
+RUN echo "ServerName localhost" | tee /etc/apache2/conf-available/fqdn.conf && \
+    a2enconf fqdn
+
 # Make port 80 available outside this container
 EXPOSE 80
 
